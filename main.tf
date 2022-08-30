@@ -63,7 +63,7 @@ resource "aws_lambda_function" "lambda_handler" {
 resource "aws_cloudwatch_event_rule" "create_ami_backup" {
     name = "create_ami_backup"
     description = "create_wp_backup"
-    schedule_expression = "cron(45 * * * *)"
+    schedule_expression = "cron(0/30 * ? * MON-FRI *)"
 }
 
 resource "aws_cloudwatch_event_target" "initiate_backup" {
