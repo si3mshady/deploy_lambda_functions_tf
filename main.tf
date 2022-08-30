@@ -56,7 +56,7 @@ resource "aws_lambda_function" "lambda_handler" {
         source_code_hash = data.archive_file.zip_lambda_handler.output_base64sha256
         role          = aws_iam_role.lambda-iam-role.arn
         runtime       = "python3.9"
-        handler       = "lambda_function.lambda_handler"
+        handler       = "lambda_handler.lambda_handler"
         timeout       = 10
 }
 
@@ -72,3 +72,6 @@ resource "aws_cloudwatch_event_target" "initiate_backup" {
     arn = "${aws_lambda_function.lambda_handler.arn}"
     
 }
+
+
+# https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html
