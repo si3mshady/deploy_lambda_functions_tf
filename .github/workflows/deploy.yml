@@ -33,7 +33,7 @@ jobs:
       - name: CodeGuru Reviewer
         uses: aws-actions/codeguru-reviewer@v1.1
         with:
-        #   build_path: target # build artifact(s) directory
+          fetch-depth: 0 # This is a required field for CodeGuru
           s3_bucket: codeguru-reviewer-sandbox	
 
       # Step 3: Upload results into GitHub
