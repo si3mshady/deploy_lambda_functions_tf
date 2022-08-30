@@ -26,7 +26,9 @@ terraform {
 
 
 
-data "aws_iam_policy_document" "lambda_assume_role_policy"{
+
+data "aws_iam_policy_document" "lambda_assume_role_policy" {
+
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
@@ -35,7 +37,28 @@ data "aws_iam_policy_document" "lambda_assume_role_policy"{
       identifiers = ["lambda.amazonaws.com"]
     }
   }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ec2:*"
+    ]
+
+    resources = ["*"]
+
+  }
+
+  statement {
+    effect = "Allow"
+
+    actions = ["lambda:InvokeFunction"]
+
+    resources = ["*"]
+  }
+
 }
+
 
 data "archive_file" "zip_lambda_handler" {  
   type = "zip"  
