@@ -25,7 +25,7 @@ jobs:
         env:
           FILE: ./lambda_handler.py
           AWS_REGION: 'us-east-1'
-          S3_BUCKET: gh-actions-sandbox
+          S3_BUCKET: codeguru-reviewer-sandbox	
           S3_KEY:  lambda_handler.py
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
@@ -34,7 +34,7 @@ jobs:
         uses: aws-actions/codeguru-reviewer@v1.1
         with:
         #   build_path: target # build artifact(s) directory
-          s3_bucket:  gh-actions-sandbox
+          s3_bucket: codeguru-reviewer-sandbox	
 
       # Step 3: Upload results into GitHub
       - name: Upload review result
