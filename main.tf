@@ -50,7 +50,6 @@ resource "aws_iam_role" "lambda-iam-role" {
 }
 
 
-
 resource "aws_lambda_function" "lambda_handler" {
         function_name = "create_wp_ami_backup"
         filename      = "handler.zip"
