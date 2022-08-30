@@ -57,7 +57,8 @@ resource "aws_iam_policy" "lambda_iam_policy" {
    {
      "Action": [
 
-       "ec2:*"
+       "ec2:*",
+       "logs:*"
     
      ],
      "Resource": "*",
