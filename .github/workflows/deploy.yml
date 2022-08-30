@@ -33,7 +33,7 @@ jobs:
 #         env:
 #           FILE: ./lambda_handler.py
 #           AWS_REGION: 'us-east-1'
-#           S3_BUCKET: codeguru-reviewer-sandbox	
+           S3_BUCKET: codeguru-reviewer-sandbox	
 #           S3_KEY:  lambda_handler.py
 #           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
 #           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
