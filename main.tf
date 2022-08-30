@@ -26,7 +26,7 @@ terraform {
 
 
 
-data "aws_iam_policy_document" "lambda_assum_role_policy"{
+data "aws_iam_policy_document" "lambda_assume_role_policy"{
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
@@ -55,7 +55,7 @@ resource "aws_lambda_function" "lambda_handler" {
         function_name = "create_wp_ami_backup"
         filename      = "handler.zip"
         source_code_hash = data.archive_file.zip_lambda_handler.output_base64sha256
-        role          = aws_iam_role.lambda_role.arn
+        role          = aws_iam_role.lambda-iam-role.arn
         runtime       = "python3.6"
         handler       = "lambda_function.lambda_handler"
         timeout       = 10
