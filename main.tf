@@ -113,4 +113,14 @@ resource "aws_cloudwatch_event_target" "initiate_backup" {
 }
 
 
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_check_foo" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.lambda_handler.name
+    principal = "events.amazonaws.com"
+    source_arn = aws_cloudwatch_event_rule.create_ami_backup.arn
+}
+
+
 # https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html
