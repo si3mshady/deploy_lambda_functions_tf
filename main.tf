@@ -15,6 +15,28 @@ provider "aws" {
   region = "us-east-1"
 }
 
+
+terraform {
+  backend "s3" {
+    bucket = "tf-state-for-si3mshady"
+    key    = "tfstate"
+    region = "us-east-1"
+  }
+}
+
+
+
+data "aws_iam_policy_document" "lambda_assum_role_policy"{
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
 data "archive_file" "zip_lambda_handler" {  
   type = "zip"  
   source_file = "${path.module}/lambda_handler.py" 
@@ -22,10 +44,17 @@ data "archive_file" "zip_lambda_handler" {
 }
 
 
+resource "aws_iam_role" "lambda-iam-role" {  
+  name = "lambda-iam-role"  
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
+}
+
+
+
 resource "aws_lambda_function" "lambda_handler" {
         function_name = "create_wp_ami_backup"
         filename      = "handler.zip"
-        source_code_hash = data.archive_file.python_lambda_package.output_base64sha256
+        source_code_hash = data.archive_file.zip_lambda_handler.output_base64sha256
         role          = aws_iam_role.lambda_role.arn
         runtime       = "python3.6"
         handler       = "lambda_function.lambda_handler"
@@ -35,7 +64,7 @@ resource "aws_lambda_function" "lambda_handler" {
 resource "aws_cloudwatch_event_rule" "create_ami_backup" {
     name = "create_ami_backup"
     description = "create_wp_backup"
-    schedule_expression = "cron(30 21 * * *)"
+    schedule_expression = "cron(45 * * * *)"
 }
 
 resource "aws_cloudwatch_event_target" "initiate_backup" {
