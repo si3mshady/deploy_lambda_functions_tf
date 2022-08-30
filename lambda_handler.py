@@ -10,7 +10,7 @@ def get_wp_instance_id():
     return [i.get('Instances')[0]['InstanceId'] for i in res if i.get('Instances')[0]['Tags'][0]['Value'] == TAG ][0]
 
 def create_image():
-    kwargs = {"InstanceId":get_wp_instance_id(), "Name": f"{TAG}-{time.time.time()}"}
+    kwargs = {"InstanceId":get_wp_instance_id(), "Name": f"{TAG}-{time.time()}"}
     return  ec2.create_image(**kwargs)
 
 
